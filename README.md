@@ -1,19 +1,22 @@
-# cctv_tracking
-intoxicated person detection on surveilance view of camera .
 <한국어- Korean version> 
 
-주제: CCTV기반 주취자 행동 감지 및 음주운전 예방 AI System 
-총 3가지 형식의 모델로 주취자 식별을 진행한다
+# 주제: CCTV기반 주취자 행동 감지 및 음주운전 예방 AI System 
+	 총 3가지 형식의 모델로 주취자 식별을 진행한다
 
-<모델>
-모델 1. Detection모델 Class: Car, Open Driver-seat, Car-Door Open, Person 을 통해 사람이 자동차에 접근하였을 때, 운전석으로 향하는지, 혹은 다른좌석으로 항하는지 확인 가능하다.
+# <모델>
+모델 1. Detection모델 
+	Class: Car, Open Driver-seat, Car-Door Open, Person 을 통해 사람이 자동차에 접근하였을 때, 운전석으로 향하는지, 혹은 다른좌석으로 항하는지 확인 가능하다.
 
 모델 2. Yolo Track & Pose Estimation Tracking 모델을 통해 각 사람마다 ID를 부여하고, Tracking에 의해 생성된 ID의 Bbox를 기준으로 포즈 측정을 진행한다. 이 때 포즈 측정을 더 자세하게 진행하기 위해, 각 프레임 중 각 주체의 BBOX를 제외한 부분을 색상을 검정색으로 칠해 더 자세하게 식별하도록 한다. 각 프레임과 각 주체마다 포즈 측정을 진행 한 뒤, 하나의 csv 파일에 저장한다.
 
 모델 3. Sequence (LSTM 혹은 Transformer) model2를 통해 수집된 csv 파일을 기반으로 Sequence length를 90으로 지정한 뒤 연속적인 값에 대해 값을 정하기 위해 Sequence model(LSTM 혹은 Transformer)을 통해 진행된다.
 
-<시스템 Workflow> 
-위 모델 3개를 통해 주취자 식별 및 음주운전 조기 포착을 진행하는데, 우선 LSTM을 통해 주취자를 식별 후 주취자가 움직일때마다 빨간색으로 주취자를 Bbox를 그린다., 모델 1으로 포착한 자동차와 거리가 가까워지면 자동차의 라벨을 Intoxicated person car로 변경한다. 그 뒤, 총 3개의 Class인 Intoxciated car ,open driver-seat, drunken person이 겹치게 되면 분홍색으로 화면색상을 전환하여 위험성을 부여하고, 탑승 후 자동차의 Center값의 위치가 이전 프레임에서 200픽셀 이상 이동한다면 화면 색깔을 빨간색으로 변환하여 경고를 준다.
+# <시스템 Workflow> 
+위 모델 3개를 통해 주취자 식별 및 음주운전 조기 포착을 진행하는데,
+1. 우선 Sequence model 을 통해 주취자를 식별 후 주취자가 움직일때마다 빨간색으로 주취자를 Bbox를 그린다.
+2. 모델 1으로 포착한 자동차와 거리가 가까워지면 자동차의 라벨을 Intoxicated person car로 변경한다.
+3. 그 뒤, 총 3개의 Class인 Intoxciated car ,open driver-seat, drunken person이 겹치게 되면 분홍색으로 화면색상을 전환하여 위험성을 부여하고
+4. 탑승 후 자동차의 Center값의 위치가 이전 프레임에서 200픽셀 이상 이동한다면 화면 색깔을 빨간색으로 변환하여 경고를 준다.
 
 모델을 작동시키기 위해 해당 깃허브를 다운로드 받은 후, main.py를 통해 모델을 실행시키면 됩니다.
 
@@ -26,10 +29,10 @@ https://drive.google.com/file/d/1B7k7i9CIquFpnnEZigEpRNejrcJ6hFxc/view?usp=shari
 https://drive.google.com/file/d/1SmdWKzg9xhvwNPjjC-D9puSyNi35Jjmz/view?usp=sharing
 
 <English - 영어 version>
-Topic: CCTV-based AI System for Identifying Intoxicated persons and Preventing Drunk Driving
-  -the system employes 3 models to detect and identify intoxicated persons: 
+# Topic: CCTV-based AI System for Identifying Intoxicated persons and Preventing Drunk Driving
+  	the system employes 3 models to detect and identify intoxicated persons: 
 
-<Models> 
+# <Models> 
 Model 1 : Detection Model
   -Clasees: Car, Open_driver_seat, Car_door_open, Person, Motocycle
   -Purpose: Detects human interation with vehicles, identifying if the person approaches the driver's seat or another seats. 
@@ -46,7 +49,7 @@ Model 3: Sequence Model (LSTM or Transformer)
   - Predicts patterns in to continuous motion data using Sequntial Model architecture( LSTM or Transformer)
   - (* If you desire to change the model, you may change the "infer"part in "main.py")
 
-<Identification Workflow> 
+# <Identification Workflow> 
 1. Drunk person Identification: 
   -Sequence model detects intoxicated behavior. Identified individuals are marked with a "Red Bounging Box"
 2. Proximity Alert:
