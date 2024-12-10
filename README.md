@@ -18,6 +18,8 @@
 모델 3. Sequence (LSTM 혹은 Transformer) model2를 통해 수집된 csv 파일을 기반으로 Sequence length를 90으로 지정한 뒤 연속적인 값에 대해 값을 정하기 위해 Sequence model(LSTM 혹은 Transformer)을 통해 진행된다.
 
 # <시스템 Workflow> 
+![스크린샷 2024-12-10 오전 11 10 37](https://github.com/user-attachments/assets/dfcb481b-299b-45d0-b99b-88bfdbd34fff)
+
 위 모델 3개를 통해 주취자 식별 및 음주운전 조기 포착을 진행하는데,
 1. 우선 Sequence model 을 통해 주취자를 식별 후 주취자가 움직일때마다 빨간색으로 주취자를 Bbox를 그린다.
 2. 모델 1으로 포착한 자동차와 거리가 가까워지면 자동차의 라벨을 Intoxicated person car로 변경한다.
